@@ -3,17 +3,7 @@ import React from "react";
 const NoteList = ({ notes, onDeleteNote, onCheckNote }) => {
   return (
     <div className="note-container">
-      <div className="note-status">
-        <div>
-          All <span>2</span>
-        </div>
-        <div>
-          completed <span>2</span>
-        </div>
-        <div>
-          open <span>2</span>
-        </div>
-      </div>
+      <NoteStatus notes={notes} />
       {notes.map((note) => (
         <NoteItem
           key={note.id}
@@ -57,5 +47,25 @@ const NoteItem = ({ note, onDeleteNote, onCheckNote }) => {
         <span>{new Date(note.createdAt).toLocaleString("en-us", options)}</span>
       </div>
     </div>
+  );
+};
+
+const NoteStatus = ({ notes }) => {
+  const allNotes = notes.length;
+  const completedNotes = notes.filter((note) => note.completed === true).length;
+  const unCompletedNotes = allNotes - completedNotes;
+  if (!allNotes) return <p>There is no note adeed ...!</p>;
+  return (
+    <ul className="note-status">
+      <li>
+        All <span>{allNotes}</span>
+      </li>
+      <li>
+        completed <span>{completedNotes}</span>
+      </li>
+      <li>
+        open <span>{unCompletedNotes}</span>
+      </li>
+    </ul>
   );
 };
