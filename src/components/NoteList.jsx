@@ -1,6 +1,6 @@
 import React from "react";
 
-const NoteList = ({ notes }) => {
+const NoteList = ({ notes, onDeleteNote }) => {
   return (
     <div className="note-container">
       <div className="note-status">
@@ -15,7 +15,7 @@ const NoteList = ({ notes }) => {
         </div>
       </div>
       {notes.map((note) => (
-        <NoteItem key={note.id} note={note}/>
+        <NoteItem key={note.id} note={note} onDeleteNote={onDeleteNote} />
       ))}
     </div>
   );
@@ -23,7 +23,7 @@ const NoteList = ({ notes }) => {
 
 export default NoteList;
 
-const NoteItem = ({note}) => {
+const NoteItem = ({ note, onDeleteNote }) => {
   const options = {
     year: "numeric",
     day: "2-digit",
@@ -37,7 +37,9 @@ const NoteItem = ({note}) => {
           <p className="desc">{note.description}</p>
         </div>
         <div className="actions">
-          <span className="trash">Delete</span>
+          <span className="trash" onClick={()=>onDeleteNote(note.id)}>
+            Delete
+          </span>
           <input type="checkbox" id="" name="" />
         </div>
       </div>
