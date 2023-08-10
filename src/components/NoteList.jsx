@@ -47,9 +47,9 @@ const NoteItem = ({ note, onDeleteNote, onCheckNote }) => {
           </span>
           <input
             type="checkbox"
-            id=""
-            name=""
-            onChange={() => onCheckNote(note.id)}
+            checked={note.completed}
+            value={note.id}
+            onChange={(e) => onCheckNote(e)}
           />
         </div>
       </div>

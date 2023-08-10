@@ -13,11 +13,13 @@ function App() {
     const filteredNotes = notes.filter((note) => note.id !== id);
     setNotes(filteredNotes);
   };
-  const checkNote = (id) => {
-    const cloneNotes = [...notes];
-    const findNote = cloneNotes.find((note) => note.id === id);
-    findNote.completed = !findNote.completed;
-    setNotes(cloneNotes);
+  const checkNote = (e) => {
+    const noteId = Number(e.target.value);
+    setNotes((prevNotes) =>
+      prevNotes.map((note) =>
+        note.id === noteId ? { ...note, completed: !note.completed } : note
+      )
+    );
   };
 
   return (
