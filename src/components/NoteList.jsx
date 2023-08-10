@@ -1,6 +1,6 @@
 import React from "react";
 
-const NoteList = ({ notes, onDeleteNote }) => {
+const NoteList = ({ notes, onDeleteNote, onCheckNote }) => {
   return (
     <div className="note-container">
       <div className="note-status">
@@ -15,7 +15,12 @@ const NoteList = ({ notes, onDeleteNote }) => {
         </div>
       </div>
       {notes.map((note) => (
-        <NoteItem key={note.id} note={note} onDeleteNote={onDeleteNote} />
+        <NoteItem
+          key={note.id}
+          note={note}
+          onDeleteNote={onDeleteNote}
+          onCheckNote={onCheckNote}
+        />
       ))}
     </div>
   );
@@ -23,24 +28,29 @@ const NoteList = ({ notes, onDeleteNote }) => {
 
 export default NoteList;
 
-const NoteItem = ({ note, onDeleteNote }) => {
+const NoteItem = ({ note, onDeleteNote, onCheckNote }) => {
   const options = {
     year: "numeric",
     day: "2-digit",
     month: "short",
   };
   return (
-    <div className="note-item">
+    <div className={note.completed ? "note-item completed" : "note-item"}>
       <div className="note-item__header">
         <div>
           <p className="title">{note.title}</p>
           <p className="desc">{note.description}</p>
         </div>
         <div className="actions">
-          <span className="trash" onClick={()=>onDeleteNote(note.id)}>
+          <span className="trash" onClick={() => onDeleteNote(note.id)}>
             Delete
           </span>
-          <input type="checkbox" id="" name="" />
+          <input
+            type="checkbox"
+            id=""
+            name=""
+            onChange={() => onCheckNote(note.id)}
+          />
         </div>
       </div>
       <div className="note-item__footer">
