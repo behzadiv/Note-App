@@ -87,7 +87,7 @@
 
 .note-item__header .actions {
   display: flex;
-  gap: 1.5rem;
+  gap: 2rem;
   align-items: center;
 }
 
@@ -96,8 +96,10 @@
   height: 1.5rem;
   color: var(--rose-500);
   background: none;
+  cursor: pointer;
 }
 
 .note-item__footer {
   color: var(--text-300);
+  text-align: left;
 }
