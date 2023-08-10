@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import AddNewNote from "./components/AddNewNote";
 import NoteList from "./components/NoteList";
 import "./App.css";
+import NoteHeader from "./components/NoteHeader";
 
 function App() {
   const [notes, setNotes] = useState([]);
+  const [sortBy, setSortBy] = useState("newest");
 
   const handleNotes = (newNote) => {
     setNotes((prevNotes) => [...prevNotes, newNote]);
@@ -21,14 +23,18 @@ function App() {
       )
     );
   };
+  const sortHandler = (e) => {
+    setSortBy(e.target.value);
+  };
 
   return (
     <div className="container">
-      <div className="note-header"></div>
+      <NoteHeader onSortHandler={sortHandler} sortBy={sortBy} />
       <div className="note-app">
         <AddNewNote onHandleNotes={handleNotes} />
         <NoteList
           notes={notes}
+          sortBy={sortBy}
           onDeleteNote={deleteNote}
           onCheckNote={checkNote}
         />

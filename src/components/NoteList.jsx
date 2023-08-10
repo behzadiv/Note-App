@@ -1,10 +1,25 @@
 import React from "react";
 
-const NoteList = ({ notes, onDeleteNote, onCheckNote }) => {
+const NoteList = ({ notes, onDeleteNote, onCheckNote, sortBy }) => {
+  let sortedNotes = [];
+  const cloneNotes = [...notes];
+  if (sortBy === "newest") {
+    sortedNotes = cloneNotes.sort((a, b) => {
+      return new Date(a.createdAt) - new Date(b.createdAt) > 0 ? -1 : 1;
+    });
+  } else if (sortBy === "latest") {
+    sortedNotes = cloneNotes.sort((a, b) => {
+      return new Date(a.createdAt) - new Date(b.createdAt) < 0 ? -1 : 1;
+    });
+  } else if (sortBy === "completed") {
+    sortedNotes = cloneNotes.sort((a, b) => {
+      return Number(a.completed) - Number(b.completed) < 0 ? -1 : 1;
+    });
+  }
   return (
     <div className="note-container">
       <NoteStatus notes={notes} />
-      {notes.map((note) => (
+      {sortedNotes.map((note) => (
         <NoteItem
           key={note.id}
           note={note}
