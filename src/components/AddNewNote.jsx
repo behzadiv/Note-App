@@ -3,6 +3,7 @@ const AddNewNote = ({ onHandleNotes }) => {
   const [newNote, setNewNote] = useState({ title: "", description: "" });
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!newNote.title || !newNote.description) return;
     const note = {
       id: Date.now(),
       createdAt: new Date().toISOString(),
@@ -34,6 +35,7 @@ const AddNewNote = ({ onHandleNotes }) => {
           placeholder="note title..."
           onChange={changeHandler}
           value={newNote.title}
+          required
         />
         <input
           type="text"
@@ -43,6 +45,7 @@ const AddNewNote = ({ onHandleNotes }) => {
           placeholder="note description..."
           onChange={changeHandler}
           value={newNote.description}
+          required
         />
         <button type="submit" className="btn btn--primary">
           Add new note
