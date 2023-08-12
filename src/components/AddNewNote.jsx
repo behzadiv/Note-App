@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { memo } from "react";
 const AddNewNote = ({ onHandleNotes }) => {
   const [newNote, setNewNote] = useState({ title: "", description: "" });
   const handleSubmit = (e) => {
@@ -55,4 +56,4 @@ const AddNewNote = ({ onHandleNotes }) => {
   );
 };
 
-export default AddNewNote;
+export default memo(AddNewNote);
