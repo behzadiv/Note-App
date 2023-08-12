@@ -29,7 +29,7 @@ function App() {
 
   return (
     <div className="container">
-      <NoteHeader onSortHandler={sortHandler} sortBy={sortBy} />
+      <NoteHeader onSortHandler={sortHandler} sortBy={sortBy} notes={notes}/>
       <div className="note-app">
         <AddNewNote onHandleNotes={handleNotes} />
         <NoteList
