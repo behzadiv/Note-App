@@ -4,28 +4,38 @@ import NoteList from "./components/NoteList";
 import "./App.css";
 import NoteHeader from "./components/NoteHeader";
 import { useCallback } from "react";
+import { useReducer } from "react";
 
+function noteReducer(state, { type, payload }) {
+  switch (type) {
+    case "addNote":
+      return (state = [...state, payload]);
+    case "deleteNote": {
+      const filteredNotes = state.filter((note) => note.id !== payload);
+      return (state = filteredNotes);
+    }
+    case "checkNote": {
+      return (state = state.map((note) =>
+        note.id === payload ? { ...note, completed: !note.completed } : note
+      ));
+    }
+
+    default:
+      return state;
+  }
+}
 function App() {
-  const [notes, setNotes] = useState([]);
   const [sortBy, setSortBy] = useState("newest");
+  const [notes, dispatch] = useReducer(noteReducer, []);
 
-  const handleNotes = useCallback(
-    (newNote) => {
-      setNotes((prevNotes) => [...prevNotes, newNote]);
-    },
-    [notes]
-  );
+  const handleNotes = useCallback((newNote) => {
+    dispatch({ type: "addNote", payload: newNote });
+  }, []);
   const deleteNote = (id) => {
-    const filteredNotes = notes.filter((note) => note.id !== id);
-    setNotes(filteredNotes);
+    dispatch({ type: "deleteNote", payload: id });
   };
-  const checkNote = (e) => {
-    const noteId = Number(e.target.value);
-    setNotes((prevNotes) =>
-      prevNotes.map((note) =>
-        note.id === noteId ? { ...note, completed: !note.completed } : note
-      )
-    );
+  const checkNote = (id) => {
+    dispatch({ type: "checkNote", payload: id });
   };
   const sortHandler = (e) => {
     setSortBy(e.target.value);

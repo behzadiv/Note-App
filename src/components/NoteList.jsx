@@ -54,7 +54,7 @@ const NoteItem = ({ note, onDeleteNote, onCheckNote }) => {
             type="checkbox"
             checked={note.completed}
             value={note.id}
-            onChange={(e) => onCheckNote(e)}
+            onChange={() => onCheckNote(note.id)}
           />
         </div>
       </div>
