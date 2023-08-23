@@ -1,6 +1,8 @@
 import React from "react";
+import { useNote, useNoteDispatch } from "../context/NoteContext";
 
-const NoteList = ({ notes, onDeleteNote, onCheckNote, sortBy }) => {
+const NoteList = ({ sortBy }) => {
+  const notes = useNote();
   let sortedNotes = [];
   const cloneNotes = [...notes];
   if (sortBy === "newest") {
@@ -20,12 +22,7 @@ const NoteList = ({ notes, onDeleteNote, onCheckNote, sortBy }) => {
     <div className="note-container">
       <NoteStatus notes={notes} />
       {sortedNotes.map((note) => (
-        <NoteItem
-          key={note.id}
-          note={note}
-          onDeleteNote={onDeleteNote}
-          onCheckNote={onCheckNote}
-        />
+        <NoteItem key={note.id} note={note} />
       ))}
     </div>
   );
@@ -33,7 +30,8 @@ const NoteList = ({ notes, onDeleteNote, onCheckNote, sortBy }) => {
 
 export default NoteList;
 
-const NoteItem = ({ note, onDeleteNote, onCheckNote }) => {
+const NoteItem = ({ note }) => {
+  const dispatch = useNoteDispatch();
   const options = {
     year: "numeric",
     day: "2-digit",
@@ -47,14 +45,17 @@ const NoteItem = ({ note, onDeleteNote, onCheckNote }) => {
           <p className="desc">{note.description}</p>
         </div>
         <div className="actions">
-          <span className="trash" onClick={() => onDeleteNote(note.id)}>
+          <span
+            className="trash"
+            onClick={() => dispatch({ type: "deleteNote", payload: note.id })}
+          >
             Delete
           </span>
           <input
             type="checkbox"
             checked={note.completed}
             value={note.id}
-            onChange={() => onCheckNote(note.id)}
+            onChange={() => dispatch({ type: "checkNote", payload: note.id })}
           />
         </div>
       </div>

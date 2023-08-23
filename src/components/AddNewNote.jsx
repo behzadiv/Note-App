@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { memo } from "react";
-const AddNewNote = ({ onHandleNotes }) => {
+import { useNoteDispatch } from "../context/NoteContext";
+const AddNewNote = () => {
   const [newNote, setNewNote] = useState({ title: "", description: "" });
+  const dispatch = useNoteDispatch();
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!newNote.title || !newNote.description) return;
@@ -12,7 +14,7 @@ const AddNewNote = ({ onHandleNotes }) => {
       title: newNote.title,
       description: newNote.description,
     };
-    onHandleNotes(note);
+    dispatch({ type: "addNote", payload: note });
     setNewNote({ title: "", description: "" });
   };
   const changeHandler = (e) => {
